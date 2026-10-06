@@ -1,8 +1,8 @@
 require("dotenv").config();
 
 
-const app = require("../src/app");
-const db = require("../src/config/connection")
+const app = require("./src/app");
+const db = require("./src/config/connection")
 const PORT = process.env.PORT || 3002;
 
 async function iniciar() {
