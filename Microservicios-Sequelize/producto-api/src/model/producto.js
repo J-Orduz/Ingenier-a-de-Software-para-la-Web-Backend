@@ -22,6 +22,9 @@ const producto= sequelize.define('producto',
         },
          
 
-    }, { sequelize, modelName: 'productos' }
+    },
+    /*Hay un atributo que es timestamps que sequelize hace es crear dos columnas adicionales: createdAt, updateAt,
+    por lo que en nuestro caso no lo necesitamos pero por defecto está en true */
+    { sequelize, modelName: 'productos', timestamps: false }
 );
 module.exports=producto;
