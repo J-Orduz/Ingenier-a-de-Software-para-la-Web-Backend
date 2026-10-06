@@ -13,16 +13,20 @@ async function iniciar() {
     // sincroniza modelos con datos; Además, si no hay tabla la crea, si hay cambios en la tabla (columnas)
     //las agrega y no borra datos ya que estén en persistencia
     await db.sync({
-      alter:true
+      alter: true
     });
     console.log("Sincronización exitosa entre modelos y BD");
     //arrancar sv http
-    app.listen(PORT,()=>{
+
+
+    console.log("Antes del listen");
+    app.listen(PORT, () => {
       console.log(`API corriendo en http://localhost:${PORT}`);
-      
+
     })
+
     
-    
+
   } catch (error) {
     console.error("Error iniciando la App:", error.message);
     process.exit(1);//esto es para que salga con error y docker lo pueda reiniciar

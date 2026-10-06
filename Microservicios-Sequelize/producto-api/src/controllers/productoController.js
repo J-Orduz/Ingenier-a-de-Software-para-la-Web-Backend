@@ -4,6 +4,7 @@ const producto = require("../model/producto");
 
 //obtener todos los productos
 const getAll = async (req, res) => {
+    
     try {
         const productos = await producto.findAll();
         res.json(productos);
@@ -15,7 +16,7 @@ const getAll = async (req, res) => {
 //obtener uno
 const getOne = async (req, res) => {
     try {
-        const salida = await producto.findByPk(req.params.codigo);
+        const salida = await producto.findByPk(req.params.id);
         if (!salida) {
             res.status(404).json({ error: "Error, no se encontró ningún producto con ese código" });
         }
@@ -54,12 +55,12 @@ const saveOne = async (req, res) => {
 //modificar
 const modifyOne = async (req, res) => {
     try {
-        const resultado = await producto.findByPk(req.params.codigo);
+        const resultado = await producto.findByPk(req.params.id);
         if (!resultado) {
             res.status(404), json({
                 //es válido esta forma, lo distinto es que se utiliza template  literals ${} para varias variables
                 //o hacer operaciones dentro del texto, siendo mucho más fácil de entender
-                error: "No se encuentra el producto con código " + req.params.codigo + " en la BD"
+                error: "No se encuentra el producto con código " + req.params.id + " en la BD"
             })
         }
         const {nombre_producto, precio, stock } = req.body;
@@ -79,7 +80,7 @@ const modifyOne = async (req, res) => {
 //eliminar
 const deleteOne=async (req,res) => {
     try {
-        const resultado=await producto.findByPk(req.params.codigo);
+        const resultado=await producto.findByPk(req.params.id);
         if (!resultado) {
             return res.status(404).json({
                  error: `No existe un producto con el código (${req.params.codigo}) en la BD`
