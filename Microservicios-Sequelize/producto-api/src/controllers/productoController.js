@@ -86,7 +86,7 @@ const deleteOne=async (req,res) => {
                  error: `No existe un producto con el código (${req.params.codigo}) en la BD`
             });
         }
-        await resultado.destroy;
+        await resultado.destroy();
         res.json({
             Mensaje:"Producto eliminado",
             eliminado: resultado
