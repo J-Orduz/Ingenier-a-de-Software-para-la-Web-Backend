@@ -7,12 +7,12 @@ services:
       - "3002:3002"
     environment:
     #es db!!!!, no copiarlo tal cual del .env
-      - HOST=db          # nombre del servicio de base de datos
-      - PORT_DBd=5432
-      - DATABASE=tienda_backend
-      - USER=postgres
-      - PASSWORD=postgres
-      - PORT=3002
+       HOST: ${HOST}          # nombre del servicio de base de datos
+       PORT_DB: ${PORT_DB}
+       DATABASE: ${DATABASE}
+       USER: ${USER}
+       PASSWORD: ${PASSWORD}
+       PORT: ${PORT}
     depends_on:
       db:
         condition: service_healthy  # espera a que PostgreSQL esté listo
