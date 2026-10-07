@@ -1,5 +1,5 @@
 //en entornos de desarrollo es sin js ya que node lo hace, se ve más bonito (?)
-const { json } = require("sequelize");
+
 const producto = require("../model/producto");
 
 //obtener todos los productos
