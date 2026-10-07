@@ -83,9 +83,10 @@ const deleteOne=async (req,res) => {
         const resultado=await producto.findByPk(req.params.id);
         if (!resultado) {
             return res.status(404).json({
-                 error: `No existe un producto con el código (${req.params.codigo}) en la BD`
+                 error: `No existe un producto con el código (${req.params.id}) en la BD`
             });
         }
+      
         await resultado.destroy();
         res.json({
             Mensaje:"Producto eliminado",

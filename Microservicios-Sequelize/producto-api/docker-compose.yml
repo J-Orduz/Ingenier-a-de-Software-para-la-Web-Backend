@@ -6,11 +6,12 @@ services:
     ports:
       - "3002:3002"
     environment:
-      - DB_HOST=localhost          # nombre del servicio de base de datos
-      - DB_PORT=5432
-      - DB_NAME=tienda_backend
-      - DB_USER=postgres
-      - DB_PASSWORD=postgres
+    #es db!!!!, no copiarlo tal cual del .env
+      - HOST=db          # nombre del servicio de base de datos
+      - PORT_DBd=5432
+      - DATABASE=tienda_backend
+      - USER=postgres
+      - PASSWORD=postgres
       - PORT=3002
     depends_on:
       db:
