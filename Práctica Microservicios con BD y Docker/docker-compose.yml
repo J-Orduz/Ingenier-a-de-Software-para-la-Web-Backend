@@ -1,0 +1,89 @@
+name: microservicios
+services:
+  cliente-api:
+    build: ./cliente-api
+    container_name: clientes
+    ports:
+      - "3001:3001"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=microservicios
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - PORT=3001
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: always
+
+  producto-api:
+    build: ./producto-api
+    container_name: productos
+    ports:
+      - "3002:3002"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=microservicios
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - PORT=3002
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: always
+
+  compra-api:
+    build: ./compra-api
+    container_name: compras
+    ports:
+      - "3003:3003"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=microservicios
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - PORT=3003
+      - CLIENTE_API_URL=http://cliente-api:3001
+      - PRODUCTO_API_URL=http://producto-api:3002
+    depends_on:
+      db:
+        condition: service_healthy
+      cliente-api:
+        condition: service_started
+      producto-api:
+        condition: service_started
+    restart: always
+
+  db:
+    image: postgres:17-alpine
+    container_name: db_postgres
+    environment:
+      - POSTGRES_DB=microservicios
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: always
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    ports:
+      - "5050:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  db_data:
